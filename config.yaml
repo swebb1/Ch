@@ -1,0 +1,18 @@
+
+raw: "/datastore/homes3/swebb1/data/Earnshaw/moonmoon/galGal7/ChIP-seq_spike_realign_Oct_2022/paired_end/raw/fastq_merged"
+
+samples: "samples.tsv"
+attributes: "Sample,Cell_stage,Type,Protein"
+
+compare: "compare.tsv"
+
+adapter1: "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"
+adapter2: "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
+
+bwa_index: "annotation/gg7b_dm6"
+
+host_genome: "gg7b"
+spike_genome: "dm6"
+host_ucsc_len_file: "annotation/gg7b.ucsc.len"
+chrmap: "annotation/chrmap.txt"
+

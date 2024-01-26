@@ -1,0 +1,14 @@
+analysis
+bwa
+cutadapt
+fastq
+logs
+macs2_primary
+macs2_unique
+raw
+visualisation
+visualisation_log2
+annotation/gg7b*
+annotation/dm6*
+annotation/GRCg7b.fa
+.snakemake

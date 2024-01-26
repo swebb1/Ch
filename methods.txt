@@ -1,0 +1,3 @@
+
+51bp paired end reads were trimmed with Cutadapt v1.18 to remove adapters and low quality sequence with the parameters --minimum-length 20 --nextseq-trim=20. Trimmed reads were aligned to the galGal7b reference genome with BWA mem v0.7.16 and the output was filtered for primary alignments. Read coverage profiles were generated with Deeptools v3.50 bamCoverage using a bin size of 1b and BPM (bins per million) normalisation. Read profiles relative to the Input samples were generated with Deeptools v3.50 bamCompare using a bin size of 20b and BPM normalisation to calculate a log2 ratio. ChIP-seq peaks were subsequently called using MACS2 v2.2.7.1 callpeak with the IP and Input samples as the respective treatment and control.
+

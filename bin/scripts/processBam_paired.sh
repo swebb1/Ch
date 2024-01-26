@@ -1,0 +1,42 @@
+
+##Convert to bam
+
+samtools sort -@ 5 bwa/$1/$1.sam -o bwa/$1/$1.bam -T bwa/$1/$1 -O BAM
+samtools view -F 2304 -bh bwa/$1/$1.bam -o bwa/$1/$1.total.bam
+samtools index bwa/$1/$1.total.bam
+samtools flagstat bwa/$1/$1.total.bam > bwa/$1/$1.total.flagstat
+fastqc bwa/$1/$1.total.bam
+
+##Get primary alignments - properly paired
+samtools view -bh -F 260 -f 3 bwa/$1/$1.total.bam -o bwa/$1/$1.primary.bam
+samtools index bwa/$1/$1.primary.bam
+samtools flagstat bwa/$1/$1.primary.bam > bwa/$1/$1.primary.flagstat
+fastqc bwa/$1/$1.primary.bam
+
+##filter for uniquely mapped reads (mapping quality > 20)
+samtools view -bh -q 20 bwa/$1/$1.primary.bam -o bwa/$1/$1.unique.bam
+samtools index bwa/$1/$1.unique.bam
+samtools flagstat bwa/$1/$1.unique.bam > bwa/$1/$1.unique.flagstat
+fastqc bwa/$1/$1.unique.bam
+
+###SPLIT READS###
+samtools view -hb -L annotation/gg7b.bed bwa/$1/$1.unique.bam > bwa/$1/$1.unique_gg7b.bam
+samtools view -hb -L annotation/dm6.bed bwa/$1/$1.unique.bam > bwa/$1/$1.unique_dm6.bam
+samtools index bwa/$1/$1.unique_gg7b.bam
+samtools index bwa/$1/$1.unique_dm6.bam
+fastqc bwa/$1/$1.unique_dm6.bam
+fastqc bwa/$1/$1.unique_gg7b.bam
+samtools flagstat bwa/$1/$1.unique_gg7b.bam > bwa/$1/$1.unique_gg7b.flagstat
+samtools flagstat bwa/$1/$1.unique_dm6.bam > bwa/$1/$1.unique_dm6.flagstat
+
+###SPLIT READS PRIMARY###
+samtools view -hb -L annotation/gg7b.bed bwa/$1/$1.primary.bam > bwa/$1/$1.primary_gg7b.bam
+samtools view -hb -L annotation/dm6.bed bwa/$1/$1.primary.bam > bwa/$1/$1.primary_dm6.bam
+samtools index bwa/$1/$1.primary_gg7b.bam
+samtools index bwa/$1/$1.primary_dm6.bam
+fastqc bwa/$1/$1.primary_dm6.bam
+fastqc bwa/$1/$1.primary_gg7b.bam
+samtools flagstat bwa/$1/$1.primary_gg7b.bam > bwa/$1/$1.primary_gg7b.flagstat
+samtools flagstat bwa/$1/$1.primary_dm6.bam > bwa/$1/$1.primary_dm6.flagstat
+
+#!!! Need to reheader sam files so Sequence dictionary does not include contigs from other genome
